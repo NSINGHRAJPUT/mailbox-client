@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import './Signup.css'
 import { useRef, useState } from "react"
 
@@ -7,6 +8,7 @@ const Signup = () =>{
     let email = useRef();
     let password = useRef();
     let confirmPassword = useRef();
+    const nav = useNavigate();
    
     const switchHandler = (e) =>{
         e.preventDefault();
@@ -38,6 +40,7 @@ const Signup = () =>{
             if(res.ok){
                 res.json().then(data=>{     
                     console.log('Sign Up Successfull')})
+                    nav('/userhome')
             }else{
                 alert('Invalid data !!! please try again')
             }
@@ -46,18 +49,25 @@ const Signup = () =>{
 
     return <div className="container">
             <h2>{isLogin ? "Sign Up Form" : 'Sign In Form'}</h2>
-            <form onSubmit={signupHandler} className="signup-form">
-                <label>Email Id</label>
-                <input type="email" ref={email}></input><br/>
-                <label>Password</label>
-                <input type="password" ref={password}></input><br/>
-                {isLogin && <label>Confirm Password</label>}
-                {isLogin && <input type="password" ref={confirmPassword}></input>}<br/>
-                {isLogin && <button type="Submit" >Sign Up</button>}
-                {!isLogin &&<button type="Submit" >Sign In</button>}
+            <div className='app'>
+            <form onSubmit={signupHandler} className="signup-form-tc">
+                <div className='form-floating'>
+                    <input type="email" ref={email} className='form-control' placeholder='Email here'></input>
+                    <label className='form-label'>Email Id</label>
+                </div>
+                <div className='form-floating'>
+                <input type="password" ref={password} placeholder='password' className='form-control'></input>
+                <label className='form-label'>Password</label>
+                </div>
+                {isLogin && <div className='form-floating'>
+                <input type="password" ref={confirmPassword} placeholder='confirm password'  className='form-control'></input>
+                <label className='form-label'>Confirm Password</label>
+                </div>}
+                {isLogin && <button type="Submit" className='btn btn-primary '>Sign Up</button>}
+                {!isLogin &&<button type="Submit" className='btn btn-primary' >Sign In</button>}
             </form>
-            <br/><br/><br/>
-            <button onClick={switchHandler} className='additional'>{isLogin ? 'Already Registered!!! Sign In' : "Don't have an account? Sign Up" }</button>
+            <button onClick={switchHandler} className='btn btn-warning btn-sm'>{isLogin ? 'Already Registered!!! Sign In' : "Don't have an account? Sign Up" }</button>
+        </div>
     </div>
 }
 
