@@ -31,8 +31,9 @@ function ComposeEmail() {
         }
         ).then(res=>{
             if(res.ok){
-                res.json().then(data=>console.log(data))
-                localStorage.setItem(`$email`,data.name)
+                res.json().then(data=>{console.log(data)
+                console.log(data.name)
+                localStorage.setItem(`${email}`,data.name)})
             }else {
                 res.json().then(data=>alert(data))
             }
