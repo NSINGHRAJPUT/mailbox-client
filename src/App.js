@@ -4,6 +4,7 @@ import Signup from './components/signup/Signup';
 import Error from './components/Error/Error'
 import User from './components/UserHome/User';
 import Header from './components/header/Header';
+import ComposeEmail from './components/composeEmail/ComposeEmail';
 
 const router = createBrowserRouter([{
   path : '/',
@@ -11,12 +12,14 @@ const router = createBrowserRouter([{
   errorElement : <Error />,
   children : [
     {path : 'userhome' , element : <User/>},
-    {path : 'signup' , element : <Signup/>}
+    {path : 'signup' , element : <Signup/>},
+    {path : 'composeemail' , element : <ComposeEmail/>}
+
   ]
 }])
 function App() {
   return (
-    <div className="App">
+    <div>
     <RouterProvider router={router} ></RouterProvider>
     </div>
   );
