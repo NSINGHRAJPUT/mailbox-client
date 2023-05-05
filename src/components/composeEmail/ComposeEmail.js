@@ -18,7 +18,8 @@ function ComposeEmail() {
     let obj = {
         email:email,
         subject: subjectref.current.value,
-        text : finalData
+        text : finalData,
+        isRead : false
     }
     console.log(obj)
     fetch(`https://react-http-ad8cd-default-rtdb.asia-southeast1.firebasedatabase.app/${email}.json`,

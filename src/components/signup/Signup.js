@@ -1,10 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import './Signup.css'
-import { useRef, useState } from "react"
+import { useRef } from "react"
+import { useDispatch, useSelector } from 'react-redux';
+import { authActions } from '../store/authentication';
 
 
 const Signup = () =>{
-    const [isLogin,setIsLogin] = useState(true)
+    const dispatch = useDispatch();
+    const isLogged = useSelector(state=>state.auth.isLogged)
     let email = useRef();
     let password = useRef();
     let confirmPassword = useRef();
@@ -12,13 +15,13 @@ const Signup = () =>{
    
     const switchHandler = (e) =>{
         e.preventDefault();
-        setIsLogin(!isLogin);
+        dispatch(authActions.switchHandler())
     }
 
     const signupHandler = (e) =>{
         e.preventDefault();
         let url;
-        if(isLogin){
+        if(!isLogged){
             if(password.current.value !== confirmPassword.current.value){
                 alert('Password and confirm password must be same')
             }else{
@@ -39,8 +42,9 @@ const Signup = () =>{
         ).then(res=>{
             if(res.ok){
                 res.json().then(data=>{     
-                    console.log('Sign Up Successfull')})
-                    nav('/userhome')
+                    console.log('Sign Up/in Successfull')
+                    dispatch(authActions.login(data))
+                    nav('/inbox')})
             }else{
                 alert('Invalid data !!! please try again')
             }
@@ -48,7 +52,7 @@ const Signup = () =>{
     }
 
     return <div className="container">
-            <h2>{isLogin ? "Sign Up Form" : 'Sign In Form'}</h2>
+            <h2>{!isLogged ? "Sign Up Form" : 'Sign In Form'}</h2>
             <div className='app'>
             <form onSubmit={signupHandler} className="signup-form-tc">
                 <div className='form-floating'>
@@ -59,14 +63,14 @@ const Signup = () =>{
                 <input type="password" ref={password} placeholder='password' className='form-control'></input>
                 <label className='form-label'>Password</label>
                 </div>
-                {isLogin && <div className='form-floating'>
+                {!isLogged && <div className='form-floating'>
                 <input type="password" ref={confirmPassword} placeholder='confirm password'  className='form-control'></input>
                 <label className='form-label'>Confirm Password</label>
                 </div>}
-                {isLogin && <button type="Submit" className='btn btn-primary '>Sign Up</button>}
-                {!isLogin &&<button type="Submit" className='btn btn-primary' >Sign In</button>}
+                {!isLogged && <button type="Submit" className='btn btn-primary '>Sign Up</button>}
+                {isLogged &&<button type="Submit" className='btn btn-primary' >Sign In</button>}
             </form>
-            <button onClick={switchHandler} className='btn btn-warning btn-sm'>{isLogin ? 'Already Registered!!! Sign In' : "Don't have an account? Sign Up" }</button>
+            <button onClick={switchHandler} className='btn btn-warning btn-sm'>{!isLogged ? 'Already Registered!!! Sign In' : "Don't have an account? Sign Up" }</button>
         </div>
     </div>
 }
