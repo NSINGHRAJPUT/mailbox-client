@@ -27,13 +27,28 @@ const Emails = () =>{
        })
     },[])
     let newMails = emails.filter((item)=>item.isRead===false)
+    const deleteHandler = (e) =>{
+        e.preventDefault();
+        let id = e.target.value
+        fetch(`https://react-http-ad8cd-default-rtdb.asia-southeast1.firebasedatabase.app/${email}/${id}.json`,
+            {
+                method : 'DELETE',
 
+            }
+        ).then(res=>{
+            if(res.ok){
+                res.json().then(data=>console.log(data))
+                setEmails((pre)=>pre.filter(item=>item.id!==id))
+            }
+        })
+    }
     return (<div>
         <h4>Unread Mails {newMails.length}</h4>
         {emails.map((item)=>{
             return (<ul>
                 <li><h3>{item.subject}</h3></li>
                 <p>{item.text}</p>
+                <button value={item.id} className="btn btn-danger" onClick={deleteHandler}>Delete</button>
            </ul>
             )
             }) 
