@@ -1,35 +1,45 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import './App.css';
-import Signup from './components/signup/Signup';
-import Error from './components/Error/Error'
-import User from './components/UserHome/User';
-import Header from './components/header/Header';
-import ComposeEmail from './components/composeEmail/ComposeEmail';
-import Inbox from './components/inbox/Inbox';
-import Emails from './components/inbox/Emails';
-import Sent from './components/inbox/Sent';
-import ShowEmail from './components/inbox/ShowEmail';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import './App.css'
 
-const router = createBrowserRouter([{
-  path : '/',
-  element : <Header/>,
-  errorElement : <Error />,
-  children : [
-    {path : 'userhome' , element : <User/>},
-    {path : 'signup' , element : <Signup/>},
-    {path : 'inbox' , element : <Inbox/>, children :
-      [{path : 'inbox/emails' , element : <Emails/>},
-      {path : 'inbox/composeemail' , element : <ComposeEmail/>},
-      {path : 'inbox/sent', element : <Sent/>},
-      {path : 'inbox/emails/:id' , element : <ShowEmail/>}]},
-  ]
-}])
-function App() {
+import AuthForm from "./components/Auth/AuthForm";
+import Logout from "./components/Auth/Logout";
+import ComposeEmail from "./components/mailbox/composeEmail";
+import  Button  from "react-bootstrap/Button";
+import Inbox from "./components/mailbox/inbox";
+import MailDeets from "./components/mailbox/mailDeets";
+
+// import SentMailDeets from "./components/mailbox/sentMailDeets";
+
+export default function App() {
+  
   return (
-    <div>
-    <RouterProvider router={router} ></RouterProvider>
+    <div className="body">
+      <BrowserRouter>
+      <Switch>
+      <Route exact path="/">
+        <AuthForm />
+      </Route>
+      <Route exact path="/welcome">
+        <div style={{ padding: "1rem" }}>
+          <Logout />
+          {/* <h1>Welcome to Your Mailbox</h1> */}
+          <a href='/compose'> <Button>Compose email</Button></a>
+          <div style={{padding: '1rem'}}>
+          <Inbox />
+          
+          </div>
+        </div>
+      </Route>
+      <Route exact path="/mail/:mailId" >
+        <MailDeets />
+      </Route>
+      
+      <Route path='/compose' >
+        <ComposeEmail />
+      </Route>
+      </Switch>
+      </BrowserRouter>
     </div>
   );
 }
-
-export default App;
