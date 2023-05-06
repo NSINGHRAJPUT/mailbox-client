@@ -9,7 +9,7 @@ const Emails = () =>{
     email = email.replace('@','');
     let id = localStorage.getItem(email)
     useEffect(()=>{
-       fetch(`https://react-http-ad8cd-default-rtdb.asia-southeast1.firebasedatabase.app/${email}.json`)
+       fetch(`https://react-http-ad8cd-default-rtdb.asia-southeast1.firebasedatabase.app/recieved/${email}.json`)
        .then(res=>{
         if(res.ok){
             res.json().then(data=>{
@@ -30,7 +30,7 @@ const Emails = () =>{
     const deleteHandler = (e) =>{
         e.preventDefault();
         let id = e.target.value
-        fetch(`https://react-http-ad8cd-default-rtdb.asia-southeast1.firebasedatabase.app/${email}/${id}.json`,
+        fetch(`https://react-http-ad8cd-default-rtdb.asia-southeast1.firebasedatabase.app/recieved/${email}/${id}.json`,
             {
                 method : 'DELETE',
 
@@ -46,8 +46,12 @@ const Emails = () =>{
         <h4>Unread Mails {newMails.length}</h4>
         {emails.map((item)=>{
             return (<ul>
-                <li><h3>{item.subject}</h3></li>
-                <p>{item.text}</p>
+                <li>
+                    {<h4>From : {item.email}</h4>}
+                    <h3>{item.subject}</h3>
+                    <p>{item.text}</p>
+                </li>
+                
                 <button value={item.id} className="btn btn-danger" onClick={deleteHandler}>Delete</button>
            </ul>
             )

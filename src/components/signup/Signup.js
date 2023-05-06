@@ -44,7 +44,7 @@ const Signup = () =>{
                 res.json().then(data=>{     
                     console.log('Sign Up/in Successfull')
                     dispatch(authActions.login(data))
-                    nav('/inbox')})
+                    nav('/userhome')})
             }else{
                 alert('Invalid data !!! please try again')
             }

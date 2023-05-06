@@ -7,6 +7,7 @@ import Header from './components/header/Header';
 import ComposeEmail from './components/composeEmail/ComposeEmail';
 import Inbox from './components/inbox/Inbox';
 import Emails from './components/inbox/Emails';
+import Sent from './components/inbox/Sent';
 
 const router = createBrowserRouter([{
   path : '/',
@@ -15,10 +16,10 @@ const router = createBrowserRouter([{
   children : [
     {path : 'userhome' , element : <User/>},
     {path : 'signup' , element : <Signup/>},
-    {path : 'composeemail' , element : <ComposeEmail/>},
-    {path : 'inbox' , element : <Inbox/>},
-    {path : 'emails' , element : <Emails/>}
-
+    {path : 'inbox' , element : <Inbox/>, children :
+      [{path : 'inbox/emails' , element : <Emails/>},
+      {path : 'inbox/composeemail' , element : <ComposeEmail/>},
+      {path : 'inbox/sent', element : <Sent/>}]},
   ]
 }])
 function App() {
