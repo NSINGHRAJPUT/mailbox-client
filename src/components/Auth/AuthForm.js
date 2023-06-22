@@ -66,7 +66,8 @@ const AuthForm = () => {
       .then((res) => {
         if (res.ok) {
           if (!isLogin) {
-            setSignupSuccess("Signup Successful, you may login");
+            alert("Signup Successful, you may login");
+            setIsLogin((prevState) => !prevState);
           }
           setShowError("");
           return res.json();
@@ -98,6 +99,10 @@ const AuthForm = () => {
       .finally(() => {
         setSignupInProgress(false);
       });
+      emailInputRef.current.value='';
+      passwordInputRef.current.value='';
+      confirmPasswordInputRef.current.value=''
+      
   };
 
   const forgotPasswordHandler = () => {

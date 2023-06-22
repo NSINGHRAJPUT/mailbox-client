@@ -57,7 +57,7 @@ const ComposeEmail = () => {
     <div style={{background:'rgba(211,211,211,0.1)',margin:"3%", borderRadius : '15px', color : 'white'}}>
         <div style={{display: 'flex', justifyContent:'space-between'}}>
       <h2>Compose Mail</h2>
-      <a href='/welcome'><Button>Inbox</Button></a>
+      <a href='/welcome'><Button>X</Button></a>
       </div>
       <Form onSubmit={handleSubmit} style={{padding: '1rem'}}>
         <Form.Group controlId="to">

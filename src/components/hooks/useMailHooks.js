@@ -8,9 +8,7 @@ export const useMailHooks = (email) => {
     const sentMails = useSelector((state) => state.mail.sentMails);
   
     const [readCount, setReadCount] = useState(0);
-  
     const dispatch = useDispatch();
-  
     useEffect(() => {
       // Fetch received emails and dispatch to store
       const useFetchMails = (email) => {
